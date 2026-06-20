@@ -29,3 +29,8 @@ plugins/.last_inuse_sweep
 
 # GSD tool runtime (installed package, not personal config)
 gsd-core/
+
+# Transient per-task artifacts (throwaway plans, task state, stats cache)
+plans/
+tasks/
+stats-cache.json

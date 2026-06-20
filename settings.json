@@ -11,8 +11,10 @@
       "Read(.env)",
       "Read(.env.*)",
       "Read(.secrets)"
-    ]
+    ],
+    "defaultMode": "auto"
   },
+  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
@@ -28,6 +30,22 @@
           {
             "type": "command",
             "command": "\"C:/Users/jackw/.claude/hooks/gsd-session-state.sh\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:/Program Files/nodejs/node.exe\" \"C:/Users/jackw/.agent-hooks/caveman-lite-session-start.js\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:/Program Files/nodejs/node.exe\" \"C:/Users/jackw/.agent-hooks/ponytail-session-start.js\""
           }
         ]
       }
@@ -175,12 +193,12 @@
   "enableWorkflows": true,
   "statusLine": {
     "type": "command",
-    "command": "\"C:/Program Files/nodejs/node.exe\" \"C:/Users/jackw/.claude/hooks/gsd-statusline.js\""
+    "command": "input=$(cat); model=$(echo \"$input\" | jq -r '.model.display_name'); dir=$(echo \"$input\" | jq -r '.workspace.current_dir'); dirname=$(basename \"$dir\"); branch=$(git -C \"$dir\" --no-optional-locks branch --show-current 2>/dev/null); in_tok=$(echo \"$input\" | jq -r '.context_window.total_input_tokens // empty'); out_tok=$(echo \"$input\" | jq -r '.context_window.total_output_tokens // empty'); remaining=$(echo \"$input\" | jq -r '.context_window.remaining_percentage // empty'); out=\"\\033[2;3m$model\\033[0m  \\033[2m$dirname\\033[0m\"; [ -n \"$branch\" ] && out=\"$out  \\033[2m⎇ $branch\\033[0m\"; if [ -n \"$in_tok\" ] && [ -n \"$out_tok\" ]; then in_k=$(echo \"$in_tok\" | awk '{printf \"%dk\", ($1+500)/1000}'); out_k=$(echo \"$out_tok\" | awk '{printf \"%dk\", ($1+500)/1000}'); out=\"$out  \\033[2min:${in_k} out:${out_k}\\033[0m\"; fi; if [ -n \"$remaining\" ]; then if [ \"$(echo \"$remaining\" | awk '{print ($1 <= 20)}'  )\" = \"1\" ]; then ctx_color=\"\\033[2;33m\"; else ctx_color=\"\\033[2;36m\"; fi; out=\"$out  ${ctx_color}ctx:${remaining}%\\033[0m\"; fi; printf '%b' \"$out\""
   },
   "enabledPlugins": {
     "superpowers@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true,
+    "playwright@claude-plugins-official": false,
+    "frontend-design@claude-plugins-official": false,
     "context7@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
     "github@claude-plugins-official": true,
@@ -189,7 +207,7 @@
     "chrome-devtools-mcp@claude-plugins-official": true,
     "codex@openai-codex": true,
     "supabase@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": false,
     "claude-md-management@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
     "commit-commands@claude-plugins-official": true
@@ -202,8 +220,12 @@
       }
     }
   },
-  "effortLevel": "high",
+  "alwaysThinkingEnabled": false,
   "theme": "dark",
+  "switchModelsOnFlag": false,
+  "remoteControlAtStartup": false,
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "skipDangerousModePermissionPrompt": true,
+  "effortLevel": "high"
 }
