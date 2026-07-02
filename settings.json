@@ -14,7 +14,6 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
@@ -221,11 +220,12 @@
     }
   },
   "alwaysThinkingEnabled": false,
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "switchModelsOnFlag": false,
   "remoteControlAtStartup": false,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "skipDangerousModePermissionPrompt": true,
-  "effortLevel": "high"
+  "model": "claude-fable-5[1m]"
 }
