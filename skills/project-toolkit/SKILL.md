@@ -30,8 +30,9 @@ not evident, and any isolation rules (other projects/DBs that must never be touc
 4. Fallow gate (all 4 pieces per `hooks/AGENT_HOOKS.md`): copy `hooks/fallow-gate.sh` to
    `.claude/hooks/`; merge the hooks block from `hooks/settings-hooks-snippet.json` into
    `.claude/settings.json`; `npm i -D fallow`; copy `hooks/scripts/*.mjs` to `scripts/` and add the
-   two npm script entries.
-5. Mirror: `Copy-Item -Recurse -Force ".\.claude\skills\*" ".\.agents\skills\"`.
+   npm script entries (fallow:audit, fallow:clean-temp, sync:skills).
+5. Mirror: `npm run sync:skills` (runs `scripts/sync-skills.mjs`). Never symlink between the skill
+   trees; Codex-only skills go in the script's `CODEX_ONLY` list.
 6. Verify: `/session-start` path works (canon + ACTIVE_CONTEXT.template + roadmap all readable);
    fallow gate fires on a test commit. Report a checklist of what was installed.
 
@@ -50,8 +51,8 @@ Never overwrite existing project files wholesale - this mode ADDS what is missin
 
 ## Mode: sync (project improvements -> toolkit)
 
-1. Diff the project's homegrown skills (`.claude/skills/{ponytail,session-start,session-save}`) and
-   doc templates against the toolkit's copies.
+1. Diff the project's homegrown skills (`.claude/skills/{ponytail,session-start,session-save,retro,health-audit}`)
+   and doc templates against the toolkit's copies.
 2. For each difference, judge direction: project improved it -> copy to toolkit; project merely
    specialised it (project names, paths) -> genericise to `{{PLACEHOLDERS}}` before copying, or skip
    if purely local. Show the user the diff summary before writing.

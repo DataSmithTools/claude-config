@@ -1,0 +1,11 @@
+# wiki-builder project .gitignore
+# Session memory - local-only, changes constantly, no history value
+wiki/STATE.md
+# Obsidian per-device state (keep the rest of .obsidian if you want synced settings)
+wiki/vault/.obsidian/workspace*
+wiki/vault/.obsidian/cache
+# Backups/exports are derived artefacts
+wiki/exports/
+# OS noise
+.DS_Store
+Thumbs.db
